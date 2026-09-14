@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ProductCard } from "@/components/ProductCard";
 import { useCart } from "@/lib/cart";
 import { formatINR, getProduct, productsInCollection, stockLabel } from "@/lib/catalog";
+import { useRazorpayCheckout } from "@/lib/useRazorpayCheckout";
 
 export const Route = createFileRoute("/shop/$slug")({
   loader: ({ params }) => {
@@ -55,6 +56,8 @@ function ProductPage() {
   const [size, setSize] = useState(product.sizes[0]);
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
+  const { pay, status, error } = useRazorpayCheckout();
+  const [paidId, setPaidId] = useState<string | null>(null);
 
   const related = productsInCollection(product.collectionSlug).filter(
     (p) => p.slug !== product.slug,
@@ -65,6 +68,47 @@ function ProductPage() {
     setAdded(true);
     window.setTimeout(() => setAdded(false), 2600);
   };
+
+  const onBuyNow = () => {
+    pay({
+      amountInRupees: product.price * qty,
+      receipt: `pdp-${product.slug}-${Date.now()}`,
+      description: `${product.name} · ${size} × ${qty}`,
+      notes: { product: product.name, size, qty: String(qty) },
+      onSuccess: (paymentId) => setPaidId(paymentId),
+    });
+  };
+
+  if (paidId) {
+    return (
+      <div className="lv page">
+        <section className="page-body">
+          <div className="wrap text-center py-16 max-w-xl mx-auto">
+            <div className="order-success-card">
+              <div className="success-icon">✓</div>
+              <p className="eyebrow" style={{ justifyContent: "center" }}>
+                Payment Successful
+              </p>
+              <h1 className="h2">Thank you for your order.</h1>
+              <p className="p-lead my-4">
+                Your {product.name} ({size} × {qty}) is confirmed. Payment reference:{" "}
+                <strong>{paidId}</strong>.
+              </p>
+              <p className="order-note">
+                A confirmation email is on its way. Your woven set will be dispatched within
+                2 business days.
+              </p>
+              <div className="mt-8">
+                <Link to="/shop" className="btn btn-primary">
+                  Continue Shopping
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="lv page">
@@ -158,6 +202,13 @@ function ProductPage() {
               </div>
 
               <div className="pdp-actions">
+                <button
+                  className="btn btn-buynow"
+                  onClick={onBuyNow}
+                  disabled={product.stock === 0 || status === "loading"}
+                >
+                  {status === "loading" ? "Starting checkout…" : "Buy Now"}
+                </button>
                 <button className="btn btn-primary" onClick={onAdd} disabled={product.stock === 0}>
                   {product.stock === 0 ? "Out of stock" : "Add to cart"}
                 </button>
@@ -166,6 +217,8 @@ function ProductPage() {
                 </Link>
               </div>
               {added ? <p className="added-note">Added to your cart.</p> : null}
+              {error ? <p className="pay-error">{error}</p> : null}
+              <p className="rzp-secured">🔒 Payments secured by Razorpay</p>
             </div>
           </div>
 

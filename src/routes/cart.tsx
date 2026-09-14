@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useCart } from "@/lib/cart";
 import { formatINR } from "@/lib/catalog";
+import { useRazorpayCheckout } from "@/lib/useRazorpayCheckout";
 
 export const Route = createFileRoute("/cart")({
   head: () => ({
@@ -33,20 +34,39 @@ function CartPage() {
     payment: "upi",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { pay, status: payStatus, error: payError } = useRazorpayCheckout();
 
   const amountNeededForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
   const progressPercent = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
+  const shippingCost = amountNeededForFreeShipping === 0 ? 0 : 199;
+  const payTotal = subtotal + shippingCost;
+
+  const completeOrder = (reference: string) => {
+    clear();
+    setIsSubmitting(false);
+    setIsCheckoutOpen(false);
+    setOrderPlaced(reference);
+  };
 
   const handleCheckoutSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setTimeout(() => {
-      const orderId = `LV-${Math.floor(100000 + Math.random() * 900000)}`;
-      clear();
-      setIsSubmitting(false);
-      setIsCheckoutOpen(false);
-      setOrderPlaced(orderId);
-    }, 1200);
+
+    if (formData.payment === "cod") {
+      setIsSubmitting(true);
+      setTimeout(() => {
+        completeOrder(`LV-${Math.floor(100000 + Math.random() * 900000)}`);
+      }, 1200);
+      return;
+    }
+
+    pay({
+      amountInRupees: payTotal,
+      receipt: `cart-${Date.now()}`,
+      description: `Loomsville order · ${count} item${count === 1 ? "" : "s"}`,
+      prefill: { name: formData.name, email: formData.email },
+      notes: { city: formData.city, pincode: formData.pincode },
+      onSuccess: (paymentId) => completeOrder(paymentId),
+    });
   };
 
   if (orderPlaced) {
@@ -212,9 +232,7 @@ function CartPage() {
               </div>
               <div className="summary-line">
                 <span>Shipping</span>
-                <span>
-                  {amountNeededForFreeShipping === 0 ? "FREE" : formatINR(199)}
-                </span>
+                <span>{shippingCost === 0 ? "FREE" : formatINR(shippingCost)}</span>
               </div>
               <div className="summary-line">
                 <span>Taxes & Duties</span>
@@ -223,13 +241,11 @@ function CartPage() {
               <div className="summary-divider" />
               <div className="summary-line total">
                 <span>Total</span>
-                <span>
-                  {formatINR(subtotal + (amountNeededForFreeShipping === 0 ? 0 : 199))}
-                </span>
+                <span>{formatINR(payTotal)}</span>
               </div>
 
               <button
-                className="btn btn-primary full-width"
+                className="btn btn-buynow full-width"
                 onClick={() => setIsCheckoutOpen(true)}
               >
                 Proceed to Checkout
@@ -239,6 +255,7 @@ function CartPage() {
                 <p>🔒 Secure 256-bit SSL encrypted transaction</p>
                 <p>🌿 100% Farm Cotton Guaranteed</p>
                 <p>🔄 30-Day Hassle-Free Exchange</p>
+                <p>💳 Payments secured by Razorpay</p>
               </div>
             </div>
           </div>
@@ -347,17 +364,26 @@ function CartPage() {
                 </div>
               </div>
 
+              {payError ? <p className="pay-error">{payError}</p> : null}
+
               <div className="modal-footer">
                 <div className="modal-total">
                   <span>Pay Total:</span>
-                  <strong>
-                    {formatINR(subtotal + (amountNeededForFreeShipping === 0 ? 0 : 199))}
-                  </strong>
+                  <strong>{formatINR(payTotal)}</strong>
                 </div>
-                <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-                  {isSubmitting ? "Processing..." : "Place Order"}
+                <button
+                  type="submit"
+                  className="btn btn-buynow"
+                  disabled={isSubmitting || payStatus === "loading"}
+                >
+                  {isSubmitting || payStatus === "loading"
+                    ? "Processing…"
+                    : formData.payment === "cod"
+                      ? "Place Order"
+                      : "Pay & Place Order"}
                 </button>
               </div>
+              <p className="rzp-secured center">🔒 Payments secured by Razorpay</p>
             </form>
           </div>
         </div>

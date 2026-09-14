@@ -232,6 +232,16 @@ nav.site.scrolled { padding: 14px 0; background: rgba(245, 239, 226, 0.85); back
 .btn svg { width: 16px; height: 16px; transition: transform .35s var(--ease); }
 .btn:hover svg { transform: translateX(3px); }
 
+/* Buy Now — premium sand accent, distinct from Add to Cart */
+.btn-buynow { background: var(--sand); color: var(--charcoal); border-color: var(--sand); }
+.btn-buynow:hover:not(:disabled) { background: var(--sand-dark); border-color: var(--sand-dark); transform: translateY(-3px); box-shadow: 0 16px 30px -14px rgba(169, 130, 79, 0.55); }
+.btn-buynow:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* Payment status messaging */
+.pay-error { color: #b91c1c; font-size: 0.88rem; font-weight: 600; margin-top: 12px; }
+.rzp-secured { font-size: 0.78rem; color: var(--charcoal-45); margin-top: 14px; }
+.rzp-secured.center { text-align: center; }
+
 /* hero */
 header.hero { position: relative; padding: 254px 0 120px; overflow: hidden; min-height: 92vh; display: flex; align-items: center; }
 .hero-weave { position: absolute; inset: 0; z-index: 0; opacity: 0.55; pointer-events: none; width: 100%; height: 100%; }
