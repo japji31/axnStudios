@@ -10,16 +10,15 @@ import { Link, Route, Router as WouterRouter, Switch, useLocation } from 'wouter
 const queryClient = new QueryClient();
 
 const site = {
-  name: 'Japji Soni',
+  name: 'axnstudios',
   role: 'Data Scientist — NLP & Agentic AI',
   location: 'Mohali, Punjab, India',
-  positioning: 'I build AI agents that hold up in production.',
   intro: 'Data Scientist working on voice AI, LLM agents and retrieval systems — who also designs, builds and deploys scalable websites end to end.',
   email: 'yps.japji@gmail.com',
   linkedin: 'https://www.linkedin.com/in/japji-soni-07aa501a6/',
   resume: '/japji-soni-resume.pdf',
-  seoTitle: 'Japji Soni — Data Scientist, NLP & Agentic AI',
-  seoDescription: 'Portfolio of Japji Soni, a Data Scientist building production voice AI agents, LLM copilots and RAG systems at Birdeye.',
+  seoTitle: 'Japji Soni — Web Development, Automation & AI',
+  seoDescription: 'Japji Soni designs and ships websites, web and app products, automates the work behind them, and adds AI features that earn their place.',
 };
 
 function PageMeta({ title, description }: { title: string; description: string }) {
@@ -66,7 +65,7 @@ function Header() {
   return (
     <header className="header">
       <div className="container-wide header-inner">
-        <Link href="/" className="brand" data-testid="link-brand">JAPJI SONI</Link>
+        <Link href="/" className="brand" aria-label="AXN Studios — home" data-testid="link-brand"><img src="/logo-dark.png" alt="AXN Studios" /></Link>
         <nav className="main-nav" aria-label="Primary navigation">
           {links.map((link) => (
             <Link
@@ -121,8 +120,7 @@ function Footer() {
       <div className="container-wide">
         <div className="footer-grid">
           <div>
-            <Link href="/" className="footer-brand" data-testid="link-footer-brand">JAPJI SONI</Link>
-            <p>{site.role}</p>
+            <Link href="/" className="footer-brand" aria-label="AXN Studios — home" data-testid="link-footer-brand"><img src="/logo-light.png" alt="AXN Studios" /></Link>
           </div>
           <div>
             <span className="footer-label">Pages</span>
@@ -140,8 +138,7 @@ function Footer() {
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} {site.name}. All rights reserved.</span>
-          <span>{site.positioning}</span>
+          <span>© {new Date().getFullYear()} axnstudios. All rights reserved.</span>
         </div>
       </div>
     </footer>
@@ -159,24 +156,59 @@ function Shell({ children }: { children: ReactNode }) {
 }
 
 const services = [
-  { number: '01', title: 'Voice & conversational AI', description: 'Agents that talk to real customers and stay accurate, compliant and natural.', list: ['Appointment workflows', 'EHR integrations', 'HIPAA guardrails', 'Call-quality analysis'] },
-  { number: '02', title: 'Agentic AI & RAG', description: 'Copilots and retrieval systems that turn a plain prompt into finished work.', list: ['LangGraph workflows', 'RAG pipelines', 'Vector databases', 'Prompt engineering'] },
-  { number: '03', title: 'Applied ML & vision', description: 'Fine-tuned models and pipelines, from research to a monitored deployment.', list: ['LLM fine-tuning', 'Computer vision', 'MLOps', 'Cloud & event-driven systems'] },
-  { number: '04', title: 'Web & DevOps', description: 'Scalable websites for real businesses, built and shipped without hand-offs.', list: ['Responsive front-end', 'E-commerce builds', 'Docker & Git workflows', 'Deployment on Vercel'] },
+  { number: '01', title: 'Web Development', description: 'Production websites, web apps, dashboards and design systems — designed and shipped end to end.', list: ['Business websites', 'E-commerce builds', 'Dashboards', 'Design systems'] },
+  { number: '02', title: 'App Development', description: 'Full-stack web and app products, admin panels and the internal tools that keep a business running.', list: ['Full-stack products', 'Admin panels', 'Internal tools', 'Responsive front-ends'] },
+  { number: '03', title: 'Marketing Automation', description: 'Intelligent marketing systems that connect your channels, automate customer journeys, and turn every interaction into an opportunity.', list: ['AI agents & workflows', 'API & system integrations', 'Process orchestration', 'Monitoring & human handoff'] },
+{ number: '04', title: 'AI Agents & Chatbots', description: 'Intelligent agents that understand your business, communicate naturally, and take action — from customer support and lead qualification to internal workflows.', list: ['AI agents & assistants', 'Voice AI & conversational systems'] }
 ];
 
 const projects = [
-  { title: 'Loomsville', meta: 'Web / E-commerce · Live', description: 'A fast, responsive online store for a luxury farm-cotton bedding brand — designed, built and deployed end to end.', image: '/images/project-interface.png', href: 'https://looms-taupe.vercel.app/' },
-  { title: 'Myna Voice Agents', meta: 'Voice AI / Healthcare · 2024 — now', description: 'Production voice AI agents for Birdeye’s Myna, an Operations AI Coworker serving healthcare and automotive businesses.', image: '/images/contact-studio.png', href: '' },
-  { title: 'Email Template Copilot', meta: 'Agentic AI / Marketing · Now', description: 'A copilot agent that turns a plain-language prompt into a production-grade HTML email campaign.', image: '/images/about-studio.png', href: '' },
+  { title: 'Loomsville', meta: 'Web / E-commerce · Live', description: 'A calm online store for a luxury farm-cotton bedding brand — collections, bundle offers and a clear path to checkout, built and deployed end to end.', image: '/images/project-interface.png', href: 'https://looms-taupe.vercel.app/' },
+  { title: 'NewsFinder', meta: 'AI / Intelligence ', description: 'Context-aware news discovery for niche research — helping users find relevant stories, connect events and explore information through natural-language search.', image: '/images/news.png', href: '' },
+  { title: 'Email Template Copilot', meta: 'AI Integration / Marketing ', description: 'A copilot that turns a plain-language prompt into a production-grade HTML email campaign, personalised at scale.', image: '/images/template.png', href: '' },
 ];
 
 const process = [
-  ['01', 'Understand the workflow', 'Map how the business actually works before choosing a model.'],
-  ['02', 'Prototype against real data', 'Evaluate on real conversations, documents and edge cases early.'],
-  ['03', 'Ship with guardrails', 'Add monitoring, safety and cost controls before it reaches customers.'],
-  ['04', 'Keep improving', 'Feed what real conversations teach back into the system.'],
+  ['01', 'Define', 'Start with the outcome the work has to serve, not the tech. What does done look like, and how will we know?'],
+  ['02', 'Build', 'Make the smallest honest version end to end — flows, interface and data — and put it in front of real use.'],
+  ['03', 'Harden', 'Add the unglamorous parts that make it production-grade: testing, monitoring, versioning, rollback and guardrails.'],
+  ['04', 'Ship & learn', 'Ship to real users, instrument everything, and turn each version into the experiment for the next.'],
 ];
+
+const PREVIEW_WIDTH = 1440;
+
+/** Renders a live site at desktop width and scales it down to fill its container. */
+function LivePreview({ url, title, fallback }: { url: string; title: string; fallback: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [size, setSize] = useState({ w: 0, h: 0 });
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new ResizeObserver(([entry]) => setSize({ w: entry.contentRect.width, h: entry.contentRect.height }));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  const scale = size.w ? size.w / PREVIEW_WIDTH : 0.3;
+  return (
+    <div ref={ref} className="live-preview">
+      <img src={fallback} alt="" aria-hidden="true" />
+      {size.w > 0 && (
+        <iframe
+          src={url}
+          title={title}
+          loading="lazy"
+          tabIndex={-1}
+          aria-hidden="true"
+          onLoad={() => setLoaded(true)}
+          className={loaded ? 'loaded' : ''}
+          style={{ width: PREVIEW_WIDTH, height: size.h / scale, transform: `scale(${scale})` }}
+        />
+      )}
+      <span className="live-badge"><span className="live-dot" />Live site</span>
+    </div>
+  );
+}
 
 // Placeholder partners — replace with real names (and optional logo image paths, e.g. '/images/partners/acme.png').
 const partners: { name: string; logo?: string }[] = Array.from({ length: 30 }, (_, index) => ({
@@ -221,17 +253,17 @@ function Home() {
       <section className="hero">
         <div className="container-wide hero-grid">
           <Reveal className="hero-copy">
-            <span className="eyebrow">Data Scientist · NLP &amp; Agentic AI</span>
-            <h1 className="display">Agents that<br />ship.</h1>
-            <p>I’m {site.name}. I build production voice AI agents, LLM copilots and retrieval systems at Birdeye in Gurugram — and I like the parts where the demo becomes a product.</p>
+            <span className="eyebrow">web · automation · ai</span>
+            <h1 className="display">Websites, apps<br />&amp; automation —<br />with AI where<br />it counts.</h1>
+            <p>I’m {site.name}. I design and ship websites and web products, automate the work behind them, and add AI features that earn their place — from first sketch to shipped product.</p>
             <div className="hero-actions">
-              <a href="#work" className="button button-dark" data-testid="link-hero-work">See selected work <ArrowUpRight className="button-arrow" size={15} /></a>
-              <a href={site.resume} target="_blank" rel="noopener noreferrer" className="button button-light" data-testid="link-hero-resume">Download résumé</a>
+              <Link href="/contact" className="button button-dark" data-testid="link-hero-contact">Start a project <ArrowUpRight className="button-arrow" size={15} /></Link>
+              <a href="#work" className="button button-light" data-testid="link-hero-work">Deliverables</a>
             </div>
           </Reveal>
           <Reveal className="hero-media">
-            <img src="/images/hero-workspace.png" alt="Monochrome creative technology workspace with a laptop" data-testid="img-home-hero" />
-            <span className="media-caption">Voice AI / LLM agents / RAG</span>
+            <img src="/images/hero-axn.jpg" alt="An AI core connecting web applications, automation, AI agents and API integrations above a laptop on a desk" data-testid="img-home-hero" />
+            <span className="media-caption">Web / Automation / AI</span>
           </Reveal>
         </div>
       </section>
@@ -240,10 +272,10 @@ function Home() {
         <div className="container-wide">
           <Reveal className="section-heading">
             <div>
-              <span className="eyebrow">Expertise</span>
-              <h2 className="display">What I do.</h2>
+              <span className="eyebrow">What we do</span>
+              <h2 className="display">Websites, apps,<br />automation, AI.</h2>
             </div>
-            <p>Where I do my best work: conversational agents, agentic workflows, applied machine learning, and the web.</p>
+            <p>Four capabilities, engineered end to end — combining thoughtful interfaces with the intelligent systems that power them.</p>
           </Reveal>
           <div className="service-grid">
             {services.map(({ number, title, description, list }) => (
@@ -261,14 +293,15 @@ function Home() {
       <section className="section proof">
         <div className="container-wide proof-layout">
           <Reveal>
-            <span className="eyebrow">How I work</span>
-            <h2 className="display">AI should feel reliable first — and a little magical second.</h2>
-            <p className="proof-intro">The best agents aren’t the flashiest. They verify identity, respect guardrails, handle the messy real-world edge case, and keep improving from what they hear.</p>
+            <span className="eyebrow">Delivery &amp; engagement</span>
+            <h2 className="display">Clear milestones. Steady updates. Work that ships.</h2>
+            <p className="proof-intro">Every project has one point of contact, defined milestones and regular check-ins, so you always know what ships next. You’re involved from the first brief to launch day — and I stay accountable for it after.</p>
           </Reveal>
+          {/* PLACEHOLDER stats — replace with your real figures before publishing. */}
           <Reveal className="stats">
-            <div className="stat" data-testid="stat-accuracy"><span className="stat-number">~95%</span><span className="stat-label">Packaging-compliance accuracy</span></div>
-            <div className="stat" data-testid="stat-cost"><span className="stat-number">28%</span><span className="stat-label">Lower GPT-4 API cost</span></div>
-            <div className="stat" data-testid="stat-recommendations"><span className="stat-number">~86%</span><span className="stat-label">Recommendation accuracy after fine-tuning</span></div>
+            <div className="stat" data-testid="stat-projects"><span className="stat-number">50+</span><span className="stat-label">Projects delivered</span></div>
+            <div className="stat" data-testid="stat-clients"><span className="stat-number">20+</span><span className="stat-label">Clients supported</span></div>
+            <div className="stat" data-testid="stat-ontime"><span className="stat-number">98%</span><span className="stat-label">On-time delivery</span></div>
           </Reveal>
         </div>
       </section>
@@ -276,13 +309,21 @@ function Home() {
       <section className="section" id="work">
         <div className="container-wide">
           <Reveal className="work-head">
-            <div><span className="eyebrow">Selected work</span><h2 className="display">Things I’ve built.</h2></div>
+            <div><span className="eyebrow">Selected work</span><h2 className="display">Work that shipped.</h2></div>
             <Link href="/about" className="text-link" data-testid="link-work-more">More about me <ArrowUpRight size={14} /></Link>
           </Reveal>
           <div className="projects">
             {projects.map((project, index) => (
               <Reveal key={project.title} className="project-card">
-                <div className="project-media"><img src={project.image} alt={`${project.title} project preview`} data-testid={`img-project-${index + 1}`} /></div>
+                <div className="project-media">
+                  {project.href ? (
+                    <a href={project.href} target="_blank" rel="noopener noreferrer" aria-label={`Open ${project.title} live site`} data-testid={`preview-project-${index + 1}`}>
+                      <LivePreview url={project.href} title={`${project.title} live preview`} fallback={project.image} />
+                    </a>
+                  ) : (
+                    <img src={project.image} alt={`${project.title} project preview`} data-testid={`img-project-${index + 1}`} />
+                  )}
+                </div>
                 <h3>{project.title}</h3>
                 <p>{project.meta}</p>
                 <p>{project.description}</p>
@@ -293,13 +334,13 @@ function Home() {
         </div>
       </section>
 
-      <TrustedBy />
+      {/* Hidden for now — restore by uncommenting once the partner list is ready: <TrustedBy /> */}
 
       <section className="section process">
         <div className="container-wide">
           <Reveal className="section-heading">
-            <div><span className="eyebrow">How I build</span><h2 className="display">Reliable beats<br />flashy.</h2></div>
-            <p>Clear thinking about the real workflow first, then models, evaluation and guardrails.</p>
+            <div><span className="eyebrow">How We Work</span><h2 className="display">From first sketch<br />to shipped.</h2></div>
+            <p>One person accountable for the whole thing — from the first question to the version running in production.</p>
           </Reveal>
           <div className="process-grid">
             {process.map(([number, title, text]) => (
@@ -321,11 +362,11 @@ function CtaBand() {
     <section className="dark-cta" id="contact-cta">
       <div className="container-wide cta-row">
         <Reveal>
-          <span className="eyebrow">Got a problem for an AI agent?</span>
-          <h2 className="display">Let’s build something useful.</h2>
-          <p>Tell me what you’re building or what isn’t working yet. I’ll get back to you within a few working days.</p>
+          <span className="eyebrow">Say hi</span>
+          <h2 className="display">Have something to build?</h2>
+          <p>Tell me about your project — I take ideas from first sketch to shipped product. I read every enquiry and reply within a few working days.</p>
         </Reveal>
-        <Link href="/contact" className="button button-light" data-testid="link-cta-contact">Get in Touch <ArrowUpRight size={15} /></Link>
+        <Link href="/contact" className="button button-light" data-testid="link-cta-contact">Start a project <ArrowUpRight size={15} /></Link>
       </div>
     </section>
   );
@@ -350,13 +391,13 @@ const skills = [
 function About() {
   return (
     <>
-      <PageMeta title={`About — ${site.name}`} description="Background, experience and skills of Japji Soni." />
+      <PageMeta title={`About — ${site.name}`} description="A web development and automation practice that takes ideas from first sketch to shipped product and stays accountable for the whole thing." />
       <section className="page-hero">
         <div className="container-wide page-hero-grid">
           <Reveal>
             <span className="eyebrow">About</span>
-            <h1 className="display">Hello,<br />I’m Japji.</h1>
-            <p>{site.intro}</p>
+            <h1 className="display">Built for the<br />whole problem.</h1>
+            <p>A web development and automation practice that takes ideas from first sketch to shipped product — and stays accountable for the whole thing.</p>
           </Reveal>
           <Reveal className="hero-media">
             <img src="/images/about-studio.png" alt="Monochrome studio workspace" data-testid="img-about-hero" />
@@ -365,10 +406,10 @@ function About() {
       </section>
       <section className="section about-section">
         <div className="container-wide story-grid">
-          <Reveal><span className="eyebrow">Background</span><h2 className="display">I turn LLM prototypes into systems businesses can trust.</h2></Reveal>
+          <Reveal><span className="eyebrow">About the studio</span><h2 className="display">A practice for the system behind it and the thing people touch.</h2></Reveal>
           <Reveal className="story-copy">
-            <p>I’m a Data Scientist at Birdeye, where I own end-to-end architecture for voice AI agents used in healthcare and automotive. Before that, I built computer vision and recommendation systems at Createbytes. I graduated from Chitkara University with a 9.74 CGPA.</p>
-            <p style={{ marginTop: '20px' }}>I care about accuracy, cost and safety as much as capability — whether that’s guardrails for patient conversations or cutting GPT-4 spend by 28%.</p>
+            <p>Most studios stop at the website or stop at the back office. The interesting work — and the hard work — lives in the seam between them. I’m small on purpose: the person who scopes your project is the person who builds it. No layers, no handoffs, no surprises in the seam.</p>
+            <p style={{ marginTop: '20px' }}>Day to day I’m a Data Scientist at Birdeye, where I own end-to-end architecture for voice AI agents used in healthcare and automotive. I care about accuracy, cost and safety as much as capability — whether that’s guardrails for patient conversations or cutting GPT-4 spend by 28%.</p>
           </Reveal>
         </div>
       </section>
@@ -407,13 +448,13 @@ function About() {
 function Contact() {
   return (
     <>
-      <PageMeta title={`Contact — ${site.name}`} description="Get in touch with Japji Soni about AI, NLP and agentic systems." />
+      <PageMeta title={`Contact — ${site.name}`} description="Have something to build? Tell Japji Soni about your website, app, automation or AI project." />
       <section className="page-hero">
         <div className="container-wide page-hero-grid">
           <Reveal>
             <span className="eyebrow">Contact</span>
-            <h1 className="display">Let’s talk.</h1>
-            <p>Tell me what you’re building or what isn’t working yet. I’ll get back to you within a few working days.</p>
+            <h1 className="display">Have something<br />to build?</h1>
+            <p>Tell me about your project — I take ideas from first sketch to shipped product.</p>
           </Reveal>
           <Reveal className="hero-media"><img src="/images/contact-studio.png" alt="Monochrome workspace ready for a conversation" data-testid="img-contact-hero" /></Reveal>
         </div>
@@ -423,6 +464,7 @@ function Contact() {
           <Reveal className="contact-form">
             <span className="eyebrow">Say hello</span>
             <h2 className="display">Skip the form. Send an email.</h2>
+            <p>Web development · App development · Automation · AI integration. I read every enquiry and reply within a few working days.</p>
             <a href={`mailto:${site.email}`} className="button button-dark form-submit" data-testid="link-contact-cta">Email {site.name} <ArrowUpRight size={15} /></a>
           </Reveal>
           <Reveal className="contact-details">
