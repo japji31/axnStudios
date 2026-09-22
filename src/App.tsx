@@ -394,7 +394,7 @@ function About() {
             <p>Digital technology studio AXN Studios creates applications, websites, artificial intelligence systems, and automation to help companies run smarter. We combine design, development, and artificial intelligence to produce digital goods anchored on actual business need. We cover the whole digital experience from high-performance websites and custom applications to AI agents, intelligent chatbots, automated workflows, and system integrations. First we grasp the problem; then, we design and build the correct answer without including technology just for its sake. Every interface exists for a specific use. Every system performs a function. Every system of automation should add value. From the initial concept through the finished work, AXN Studios transforms difficult challenges into straightforward, scalable, and practical digital experiences.</p>
           </Reveal>
           <Reveal className="hero-media">
-            <img src="/images/about-studio.png" alt="Monochrome studio workspace" data-testid="img-about-hero" />
+            <img src="/images/about-axn.jpg" alt="A desk with three monitors and a laptop showing the AXN Studios website, an AI assistant chat and an automation workflow, next to sketchbooks" data-testid="img-about-hero" />
           </Reveal>
         </div>
       </section>
@@ -433,7 +433,7 @@ function Contact() {
             <h1 className="display">Have something<br />to build?</h1>
             <p>Tell me about your project — I take ideas from first sketch to shipped product.</p>
           </Reveal>
-          <Reveal className="hero-media"><img src="/images/contact-studio.png" alt="Monochrome workspace ready for a conversation" data-testid="img-contact-hero" /></Reveal>
+          <Reveal className="hero-media"><img src="/images/contact-axn.jpg" alt="A desk with a notebook sketching an idea into a website, app, AI agent or automation, next to a laptop and phone showing the AXN Studios site and chat" data-testid="img-contact-hero" /></Reveal>
         </div>
       </section>
       <section className="section">
