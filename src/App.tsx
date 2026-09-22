@@ -14,7 +14,7 @@ const site = {
   role: 'Data Scientist — NLP & Agentic AI',
   location: 'Mohali, Punjab, India',
   intro: 'Data Scientist working on voice AI, LLM agents and retrieval systems — who also designs, builds and deploys scalable websites end to end.',
-  email: 'yps.japji@gmail.com',
+  email: 'japji.soni@gmail.com',
   linkedin: 'https://www.linkedin.com/in/japji-soni-07aa501a6/',
   resume: '/japji-soni-resume.pdf',
   seoTitle: 'Japji Soni — Web Development, Automation & AI',
@@ -372,20 +372,14 @@ function CtaBand() {
   );
 }
 
-const experience = [
-  { dates: 'Jun 2024 — now', role: 'Data Scientist, NLP', company: 'Birdeye · Gurugram', detail: 'Voice AI agents for Myna, an email template copilot, RAG for the Robin chatbot, and LLM-driven review insights.' },
-  { dates: 'Sep 2023 — Jun 2024', role: 'Associate Software Engineer', company: 'Createbytes · Gurugram', detail: 'A legal compliance ML service (~95% accuracy), vector-search recommendations for a 100K+ download app, and contextual news search.' },
-  { dates: '2019 — 2023', role: 'B.Tech, Computer Science', company: 'Chitkara University', detail: 'Graduated with a 9.74 CGPA.' },
-];
-
-const skills = [
-  ['Languages', 'Python'],
-  ['Agentic AI & RAG', 'LangGraph, LangChain, vector databases (Pinecone, Chroma), embedding models'],
-  ['LLMs', 'Prompt engineering, fine-tuning (Llama-3, GPT-4 APIs)'],
-  ['Cloud & infra', 'AWS Bedrock, OpenSearch, Azure Service Bus, Firebase, Kafka, Docker'],
-  ['ML & vision', 'Deep learning, MLOps, OpenCV, YOLOv8, transformers'],
-  ['Web & DevOps', 'Responsive front-end, e-commerce, Vercel deployments, Docker, Git'],
-  ['Backend', 'FastAPI, Django REST Framework, Redis'],
+const skills: [string, string[]][] = [
+  ['Web Development', ['Responsive front-end', 'E-commerce', 'Design systems', 'Vercel deployments', 'Docker', 'Git']],
+  ['App Development', ['FastAPI', 'Django REST Framework', 'Redis', 'Full-stack products', 'Admin panels']],
+  ['Marketing Automation', ['LangGraph', 'API & system integrations', 'Process orchestration']],
+  ['AI Agents & Chatbots', ['LangChain', 'RAG', 'Vector databases', 'Embedding models', 'Prompt engineering']],
+  ['Cloud & infra', ['AWS Bedrock', 'OpenSearch', 'Azure Service Bus', 'Firebase', 'Kafka', 'Docker']],
+  ['ML & vision', ['Deep learning', 'MLOps', 'OpenCV', 'Transformers']],
+  ['Languages', ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'Python', 'SQL', 'Java', 'C#', 'PHP', 'Dart', 'Swift', 'Kotlin']],
 ];
 
 function About() {
@@ -397,35 +391,11 @@ function About() {
           <Reveal>
             <span className="eyebrow">About</span>
             <h1 className="display">Built for the<br />whole problem.</h1>
-            <p>A web development and automation practice that takes ideas from first sketch to shipped product — and stays accountable for the whole thing.</p>
+            <p>Digital technology studio AXN Studios creates applications, websites, artificial intelligence systems, and automation to help companies run smarter. We combine design, development, and artificial intelligence to produce digital goods anchored on actual business need. We cover the whole digital experience from high-performance websites and custom applications to AI agents, intelligent chatbots, automated workflows, and system integrations. First we grasp the problem; then, we design and build the correct answer without including technology just for its sake. Every interface exists for a specific use. Every system performs a function. Every system of automation should add value. From the initial concept through the finished work, AXN Studios transforms difficult challenges into straightforward, scalable, and practical digital experiences.</p>
           </Reveal>
           <Reveal className="hero-media">
             <img src="/images/about-studio.png" alt="Monochrome studio workspace" data-testid="img-about-hero" />
           </Reveal>
-        </div>
-      </section>
-      <section className="section about-section">
-        <div className="container-wide story-grid">
-          <Reveal><span className="eyebrow">About the studio</span><h2 className="display">A practice for the system behind it and the thing people touch.</h2></Reveal>
-          <Reveal className="story-copy">
-            <p>Most studios stop at the website or stop at the back office. The interesting work — and the hard work — lives in the seam between them. I’m small on purpose: the person who scopes your project is the person who builds it. No layers, no handoffs, no surprises in the seam.</p>
-            <p style={{ marginTop: '20px' }}>Day to day I’m a Data Scientist at Birdeye, where I own end-to-end architecture for voice AI agents used in healthcare and automotive. I care about accuracy, cost and safety as much as capability — whether that’s guardrails for patient conversations or cutting GPT-4 spend by 28%.</p>
-          </Reveal>
-        </div>
-      </section>
-      <section className="section next-steps">
-        <div className="container-wide">
-          <Reveal><span className="eyebrow">Experience &amp; education</span><h2 className="display">Where I’ve worked.</h2></Reveal>
-          <div className="next-grid">
-            {experience.map(({ dates, role, company, detail }) => (
-              <Reveal className="next-card" key={dates}>
-                <span className="next-num">{dates}</span>
-                <h3>{role}</h3>
-                <p><strong>{company}</strong></p>
-                <p>{detail}</p>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
       <section className="section proof">
@@ -433,10 +403,17 @@ function About() {
           <Reveal>
             <span className="eyebrow">Skills</span>
             <h2 className="display">The toolbox.</h2>
-            <p className="proof-intro"><a href={site.resume} target="_blank" rel="noopener noreferrer" className="text-link" data-testid="link-about-resume">Download résumé (PDF) <ArrowUpRight size={14} /></a></p>
+            <p className="proof-intro">The languages, frameworks and platforms behind every project — from the interface down to the systems running underneath it.</p>
           </Reveal>
           <Reveal className="stand-list">
-            {skills.map(([area, items]) => <div className="stand-item" key={area}><h3>{area}</h3><p>{items}</p></div>)}
+            {skills.map(([area, items]) => (
+              <div className="stand-item" key={area}>
+                <h3>{area}</h3>
+                <div className="tag-list">
+                  {items.map((item) => <span className="tag" key={item}>{item}</span>)}
+                </div>
+              </div>
+            ))}
           </Reveal>
         </div>
       </section>
@@ -471,7 +448,6 @@ function Contact() {
             <span className="eyebrow">Elsewhere</span><h2 className="display">Find me<br />online.</h2>
             <div className="detail-list">
               <div className="detail-item"><Mail /><div><h3>Email</h3><a href={`mailto:${site.email}`} data-testid="link-contact-email">{site.email}</a></div></div>
-              <div className="detail-item"><Linkedin /><div><h3>LinkedIn</h3><a href={site.linkedin} target="_blank" rel="noopener noreferrer" data-testid="link-contact-linkedin">Japji Soni</a></div></div>
               <div className="detail-item"><MapPin /><div><h3>Location</h3><p>{site.location}</p></div></div>
             </div>
           </Reveal>
