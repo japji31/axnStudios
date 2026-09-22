@@ -16,7 +16,7 @@ const site = {
   email: 'axnstudios31@gmail.com',
   linkedin: 'https://www.linkedin.com/in/japji-soni-07aa501a6/',
   resume: '/japji-soni-resume.pdf',
-  seoTitle: 'Japji Soni — Web Development, Automation & AI',
+  seoTitle: 'Home - AxnStudios',
   seoDescription: 'Japji Soni designs and ships websites, web and app products, automates the work behind them, and adds AI features that earn their place.',
 };
 
@@ -156,7 +156,7 @@ const services = [
 ];
 
 const projects = [
-  { title: 'Loomsville', meta: 'Web / E-commerce · Live', description: 'A calm online store for a luxury farm-cotton bedding brand — collections, bundle offers and a clear path to checkout, built and deployed end to end.', image: '/images/project-interface.png', href: 'https://looms-taupe.vercel.app/' },
+  { title: 'Loomsville', meta: 'Web / E-commerce · Live', description: 'A calm online store for a luxury farm-cotton bedding brand — collections, bundle offers and a clear path to checkout, built and deployed end to end.', image: '/images/project-interface.png', href: 'https://hbcqzk-1z.myshopify.com/' },
   { title: 'NewsFinder', meta: 'AI / Intelligence ', description: 'Context-aware news discovery for niche research — helping users find relevant stories, connect events and explore information through natural-language search.', image: '/images/news.png', href: '' },
   { title: 'Email Template Copilot', meta: 'AI Integration / Marketing ', description: 'A copilot that turns a plain-language prompt into a production-grade HTML email campaign, personalised at scale.', image: '/images/template.png', href: '' },
 ];
@@ -168,36 +168,18 @@ const process = [
   ['04', 'Ship & learn', 'Ship to real users, instrument everything, and turn each version into the experiment for the next.'],
 ];
 
-const PREVIEW_WIDTH = 1440;
-
-/** Renders a live site at desktop width and scales it down to fill its container. */
-function LivePreview({ url, title, fallback }: { url: string; title: string; fallback: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [size, setSize] = useState({ w: 0, h: 0 });
-  const [loaded, setLoaded] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new ResizeObserver(([entry]) => setSize({ w: entry.contentRect.width, h: entry.contentRect.height }));
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-  const scale = size.w ? size.w / PREVIEW_WIDTH : 0.3;
+/**
+ * Shows a static screenshot with a "Live site" badge, linking out to the real
+ * URL. Real embedding via <iframe> was tried and dropped: most production
+ * sites (Shopify, Vercel auth-gated previews, etc.) send X-Frame-Options /
+ * frame-ancestors headers that block embedding outright, and a blocked frame
+ * still fires `onLoad`, so there is no reliable way to detect the failure and
+ * fall back — the iframe just renders blank on top of the fallback image.
+ */
+function LivePreview({ image, alt }: { image: string; alt: string }) {
   return (
-    <div ref={ref} className="live-preview">
-      <img src={fallback} alt="" aria-hidden="true" />
-      {size.w > 0 && (
-        <iframe
-          src={url}
-          title={title}
-          loading="lazy"
-          tabIndex={-1}
-          aria-hidden="true"
-          onLoad={() => setLoaded(true)}
-          className={loaded ? 'loaded' : ''}
-          style={{ width: PREVIEW_WIDTH, height: size.h / scale, transform: `scale(${scale})` }}
-        />
-      )}
+    <div className="live-preview">
+      <img src={image} alt={alt} />
       <span className="live-badge"><span className="live-dot" />Live site</span>
     </div>
   );
@@ -311,7 +293,7 @@ function Home() {
                 <div className="project-media">
                   {project.href ? (
                     <a href={project.href} target="_blank" rel="noopener noreferrer" aria-label={`Open ${project.title} live site`} data-testid={`preview-project-${index + 1}`}>
-                      <LivePreview url={project.href} title={`${project.title} live preview`} fallback={project.image} />
+                      <LivePreview image={project.image} alt={`${project.title} project preview`} />
                     </a>
                   ) : (
                     <img src={project.image} alt={`${project.title} project preview`} data-testid={`img-project-${index + 1}`} />
