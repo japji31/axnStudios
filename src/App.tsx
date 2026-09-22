@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Linkedin, Mail, MapPin, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Mail, MapPin, Menu, X } from 'lucide-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
@@ -11,10 +11,9 @@ const queryClient = new QueryClient();
 
 const site = {
   name: 'axnstudios',
-  role: 'Data Scientist — NLP & Agentic AI',
-  location: 'Mohali, Punjab, India',
+  location: '97-10 62nd Dr Rego Park, NY,11374',
   intro: 'Data Scientist working on voice AI, LLM agents and retrieval systems — who also designs, builds and deploys scalable websites end to end.',
-  email: 'japji.soni@gmail.com',
+  email: 'axnstudios31@gmail.com',
   linkedin: 'https://www.linkedin.com/in/japji-soni-07aa501a6/',
   resume: '/japji-soni-resume.pdf',
   seoTitle: 'Japji Soni — Web Development, Automation & AI',
@@ -78,9 +77,9 @@ function Header() {
             </Link>
           ))}
         </nav>
-        <Link href="/contact" className="button button-dark" data-testid="link-header-cta">
+        <a href={`mailto:${site.email}`} className="button button-dark" data-testid="link-header-cta">
           Let’s Talk <ArrowUpRight size={14} />
-        </Link>
+        </a>
         <button
           type="button"
           className="menu-toggle"
@@ -105,9 +104,9 @@ function Header() {
               {link.label}
             </Link>
           ))}
-          <Link href="/contact" className="button button-dark" onClick={() => setOpen(false)} data-testid="link-mobile-cta">
+          <a href={`mailto:${site.email}`} className="button button-dark" onClick={() => setOpen(false)} data-testid="link-mobile-cta">
             Let’s Talk <ArrowUpRight size={14} />
-          </Link>
+          </a>
         </nav>
       )}
     </header>
@@ -128,12 +127,6 @@ function Footer() {
               <Link href="/" data-testid="link-footer-home">Home</Link>
               <Link href="/about" data-testid="link-footer-about">About</Link>
               <Link href="/contact" data-testid="link-footer-contact">Contact</Link>
-            </div>
-          </div>
-          <div>
-            <span className="footer-label">Elsewhere</span>
-            <div className="social-links">
-              <a href={site.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" data-testid="link-social-linkedin"><Linkedin size={15} /></a>
             </div>
           </div>
         </div>
