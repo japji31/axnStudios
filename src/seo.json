@@ -1,0 +1,24 @@
+{
+  "siteName": "AXN Studios",
+  "url": "https://axnstudios.vercel.app",
+  "image": "/og.jpg",
+  "imageAlt": "AXN Studios — websites, apps, automation and AI",
+  "pages": {
+    "/": {
+      "title": "Home - AxnStudios",
+      "description": "Japji Soni designs and ships websites, web and app products, automates the work behind them, and adds AI features that earn their place."
+    },
+    "/about": {
+      "title": "About — axnstudios",
+      "description": "A web development and automation practice that takes ideas from first sketch to shipped product and stays accountable for the whole thing."
+    },
+    "/contact": {
+      "title": "Contact — axnstudios",
+      "description": "Have something to build? Tell Japji Soni about your website, app, automation or AI project."
+    }
+  },
+  "notFound": {
+    "title": "Page not found — AXN Studios",
+    "description": "The page you’re looking for doesn’t exist or has moved."
+  }
+}
