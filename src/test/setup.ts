@@ -19,6 +19,10 @@ class ImmediateIntersectionObserver {
 }
 vi.stubGlobal('IntersectionObserver', ImmediateIntersectionObserver);
 
+// jsdom has no layout, so scrolling APIs are no-ops.
+window.scrollTo = vi.fn() as unknown as typeof window.scrollTo;
+Element.prototype.scrollIntoView = vi.fn();
+
 afterEach(() => {
   cleanup();
   document.head.innerHTML = '';

@@ -17,7 +17,7 @@ function replaceTag(html, pattern, replacement, label) {
   return html.replace(pattern, replacement);
 }
 
-function render({ title, description, url, robots }) {
+function render({ title, description, url, robots, lcpImage }) {
   let html = template;
   html = replaceTag(html, /<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`, 'title');
   html = replaceTag(
@@ -70,6 +70,11 @@ function render({ title, description, url, robots }) {
     // Error pages must not advertise a canonical URL.
     html = replaceTag(html, /\s*<link\s+rel="canonical"[^>]*>/, '', 'canonical');
     html = replaceTag(html, /\s*<meta\s+property="og:url"[^>]*>/, '', 'og:url');
+  }
+  if (lcpImage) {
+    // Lets the browser fetch the hero image right away instead of after the JS has run.
+    const preload = `<link rel="preload" as="image" href="${lcpImage.src}" imagesrcset="${lcpImage.srcSet}" imagesizes="${lcpImage.sizes}" fetchpriority="high" />`;
+    html = replaceTag(html, /<\/head>/, `    ${preload}\n  </head>`, 'head end');
   }
   return html;
 }

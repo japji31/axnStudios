@@ -3,6 +3,12 @@ import seo from '@/seo.json';
 
 export type PageKey = keyof typeof seo.pages | 'notFound';
 
+/** Attributes for a page's main (above-the-fold) image. The build also preloads it from the same data. */
+export function lcpImage(page: keyof typeof seo.pages) {
+  const { src, srcSet, sizes } = seo.pages[page].lcpImage;
+  return { src, srcSet, sizes };
+}
+
 /** Canonical URL for a route; the home page keeps its trailing slash. */
 export function pageUrl(path: string): string {
   return path === '/' ? `${seo.url}/` : `${seo.url}${path}`;

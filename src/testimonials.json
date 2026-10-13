@@ -1,0 +1,137 @@
+[
+  {
+    "id": "testimonial-001",
+    "service": "Web Development",
+    "quote": "We arrived with a rough idea, a tight deadline and a long list of doubts. The team asked better questions than we expected, kept us posted without being chased, and delivered a site that finally sounds like our business. Small requests after launch were handled quickly and without any fuss.",
+    "client": {
+      "name": null,
+      "role": null,
+      "company": null
+    },
+    "project_type": "Business website",
+    "rating": null,
+    "source_status": "demo_content",
+    "approval_status": "pending",
+    "publishable": false
+  },
+  {
+    "id": "testimonial-002",
+    "service": "Marketing Automation",
+    "quote": "Our leads were scattered across spreadsheets, inboxes and a CRM nobody trusted. Once everything was connected, follow-ups began going out on their own, and our sales team could see at a glance who deserved a call that morning. It quietly removed a great deal of tedious work.",
+    "client": {
+      "name": null,
+      "role": null,
+      "company": null
+    },
+    "project_type": "CRM and email automation",
+    "rating": null,
+    "source_status": "demo_content",
+    "approval_status": "pending",
+    "publishable": false
+  },
+  {
+    "id": "testimonial-003",
+    "service": "AI Agents & Chatbots",
+    "quote": "We were wary of a chatbot speaking on our behalf. The team studied our most common questions first, then agreed with us on exactly when a conversation should be passed to a person. The assistant now handles routine inquiries politely, and it steps aside when it matters.",
+    "client": {
+      "name": null,
+      "role": null,
+      "company": null
+    },
+    "project_type": "Customer support chatbot",
+    "rating": null,
+    "source_status": "demo_content",
+    "approval_status": "pending",
+    "publishable": false
+  },
+  {
+    "id": "testimonial-004",
+    "service": "Web Development",
+    "quote": "Launching the store was far less stressful than I had feared. Product pages loaded quickly, the checkout made sense on a phone, and every question I sent was answered the same day. When a late change came up, they simply handled it and kept the schedule intact.",
+    "client": {
+      "name": null,
+      "role": null,
+      "company": null
+    },
+    "project_type": "E-commerce store",
+    "rating": null,
+    "source_status": "demo_content",
+    "approval_status": "pending",
+    "publishable": false
+  },
+  {
+    "id": "testimonial-005",
+    "service": "Marketing Automation",
+    "quote": "Before this, newsletters went out whenever someone found a spare hour. Now new contacts receive a sensible sequence of emails automatically, and replies reach the right person. The team explained each step in plain language, which made the whole process feel far less intimidating.",
+    "client": {
+      "name": null,
+      "role": null,
+      "company": null
+    },
+    "project_type": "Lead nurturing workflow",
+    "rating": null,
+    "source_status": "demo_content",
+    "approval_status": "pending",
+    "publishable": false
+  },
+  {
+    "id": "testimonial-006",
+    "service": "AI Agents & Chatbots",
+    "quote": "Our website used to collect inquiries that went nowhere. The assistant now asks a few thoughtful questions, sorts serious prospects from casual browsers, and passes the promising ones to us with a tidy summary. It has spared us countless awkward back-and-forth emails.",
+    "client": {
+      "name": null,
+      "role": null,
+      "company": null
+    },
+    "project_type": "Lead qualification assistant",
+    "rating": null,
+    "source_status": "demo_content",
+    "approval_status": "pending",
+    "publishable": false
+  },
+  {
+    "id": "testimonial-007",
+    "service": "Web Development",
+    "quote": "Our process lived in spreadsheets and sticky notes. They listened carefully, built a dashboard that matched how our staff actually work, and trained everyone without a trace of jargon. Honestly, the biggest surprise was how calm the whole project felt from start to finish.",
+    "client": {
+      "name": null,
+      "role": null,
+      "company": null
+    },
+    "project_type": "Custom web application",
+    "rating": null,
+    "source_status": "demo_content",
+    "approval_status": "pending",
+    "publishable": false
+  },
+  {
+    "id": "testimonial-008",
+    "service": "Marketing Automation",
+    "quote": "Three tools that never spoke to each other now share the same customer data. It sounds like a small thing, yet it ended a surprising amount of copying, pasting and double-checking. The team was careful, communicative and refreshingly honest about what would and would not work.",
+    "client": {
+      "name": null,
+      "role": null,
+      "company": null
+    },
+    "project_type": "API integration",
+    "rating": null,
+    "source_status": "demo_content",
+    "approval_status": "pending",
+    "publishable": false
+  },
+  {
+    "id": "testimonial-009",
+    "service": "AI Agents & Chatbots",
+    "quote": "I expected a robotic phone menu. What we received sounds composed and genuinely helpful, and it knows when to transfer a caller to a real person. The team tested it thoroughly against our own scripts before it ever spoke to a customer, and that care showed.",
+    "client": {
+      "name": null,
+      "role": null,
+      "company": null
+    },
+    "project_type": "Voice AI assistant",
+    "rating": null,
+    "source_status": "demo_content",
+    "approval_status": "pending",
+    "publishable": false
+  }
+]

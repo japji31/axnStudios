@@ -1,38 +1,33 @@
-import { type ReactNode, useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Mail, MapPin, Menu, X } from 'lucide-react';
+import { type ReactNode, useEffect, useState } from 'react';
+import {
+  ArrowUpRight,
+  Asterisk,
+  Bot,
+  Code2,
+  Layers3,
+  Mail,
+  MapPin,
+  Menu,
+  Workflow,
+  X,
+  type LucideIcon,
+} from 'lucide-react';
 import { ErrorBoundary } from '@/components/error-boundary';
-import { PageMeta } from '@/components/page-meta';
+import { lcpImage, PageMeta } from '@/components/page-meta';
+import { Reveal } from '@/components/reveal';
+import { Testimonials } from '@/components/testimonials';
+import { visibleTestimonials } from '@/testimonials';
 import NotFound from '@/pages/not-found';
 import { Link, Route, Router as WouterRouter, Switch, useLocation } from 'wouter';
 
 const site = {
-  name: 'axnstudios',
-  location: '97-10 62nd Dr Rego Park, NY,11374',
+  name: 'AXN Studios',
+  location: '97-10 62nd Dr Rego Park, NY 11374',
   email: 'axnstudios31@gmail.com',
 };
 
-function Reveal({ children, className = '' }: { children: ReactNode; className?: string }) {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.08 },
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-  return (
-    <div ref={ref} className={`reveal ${visible ? 'visible' : ''} ${className}`}>
-      {children}
-    </div>
-  );
-}
+const mailto = (subject: string, body?: string) =>
+  `mailto:${site.email}?subject=${encodeURIComponent(subject)}${body ? `&body=${encodeURIComponent(body)}` : ''}`;
 
 function Header() {
   const [location] = useLocation();
@@ -46,7 +41,7 @@ function Header() {
     <header className="header">
       <div className="container-wide header-inner">
         <Link href="/" className="brand" aria-label="AXN Studios — home" data-testid="link-brand">
-          <img src="/logo-dark.png" alt="AXN Studios" />
+          <img src="/logo-dark.png" alt="AXN Studios" width={767} height={273} />
         </Link>
         <nav className="main-nav" aria-label="Primary navigation">
           {links.map((link) => (
@@ -60,7 +55,7 @@ function Header() {
             </Link>
           ))}
         </nav>
-        <a href={`mailto:${site.email}`} className="button button-dark" data-testid="link-header-cta">
+        <a href={mailto('Project inquiry')} className="button button-dark" data-testid="link-header-cta">
           Let’s Talk <ArrowUpRight size={14} />
         </a>
         <button
@@ -88,7 +83,7 @@ function Header() {
             </Link>
           ))}
           <a
-            href={`mailto:${site.email}`}
+            href={mailto('Project inquiry')}
             className="button button-dark"
             onClick={() => setOpen(false)}
             data-testid="link-mobile-cta"
@@ -108,7 +103,7 @@ function Footer() {
         <div className="footer-grid">
           <div>
             <Link href="/" className="footer-brand" aria-label="AXN Studios — home" data-testid="link-footer-brand">
-              <img src="/logo-light.png" alt="AXN Studios" />
+              <img src="/logo-light.png" alt="AXN Studios" width={767} height={273} />
             </Link>
           </div>
           <div>
@@ -127,7 +122,9 @@ function Footer() {
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} axnstudios. All rights reserved.</span>
+          <span>
+            © {new Date().getFullYear()} {site.name}. All rights reserved.
+          </span>
         </div>
       </div>
     </footer>
@@ -144,58 +141,111 @@ function Shell({ children }: { children: ReactNode }) {
   );
 }
 
-const services = [
+const services: {
+  number: string;
+  icon: LucideIcon;
+  title: string;
+  headline: string;
+  description: string;
+  list: string[];
+}[] = [
   {
     number: '01',
+    icon: Code2,
     title: 'Web Development',
-    description: 'Production websites, web apps, dashboards and design systems — designed and shipped end to end.',
-    list: ['Business websites', 'E-commerce builds', 'Dashboards', 'Design systems'],
+    headline: 'Websites that work as hard as you do.',
+    description:
+      'We build fast, responsive websites and powerful web experiences designed to turn visitors into customers and ideas into digital products.',
+    list: [
+      'Business Websites',
+      'E-commerce Solutions',
+      'Web Applications & Dashboards',
+      'UI Systems & Responsive Design',
+    ],
   },
   {
     number: '02',
+    icon: Layers3,
     title: 'App Development',
-    description: 'Full-stack web and app products, admin panels and the internal tools that keep a business running.',
-    list: ['Full-stack products', 'Admin panels', 'Internal tools', 'Responsive front-ends'],
+    headline: 'Custom software. Built around your business.',
+    description:
+      'From SaaS platforms to internal business tools, we develop scalable applications that simplify complex processes and help your business move faster.',
+    list: [
+      'Custom Web & App Development',
+      'SaaS Platforms',
+      'Admin Panels & Dashboards',
+      'Internal Tools & Workflow Systems',
+    ],
   },
   {
     number: '03',
+    icon: Workflow,
     title: 'Marketing Automation',
+    headline: 'Less manual work. More meaningful growth.',
     description:
-      'Intelligent marketing systems that connect your channels, automate customer journeys, and turn every interaction into an opportunity.',
-    list: ['AI agents & workflows', 'API & system integrations', 'Process orchestration', 'Monitoring & human handoff'],
+      'We connect your tools, automate repetitive tasks, and create seamless marketing workflows that help you nurture leads and build stronger customer relationships.',
+    list: [
+      'CRM & API Integrations',
+      'Email & Campaign Automation',
+      'Lead Nurturing Workflows',
+      'Process Automation & Monitoring',
+    ],
   },
   {
     number: '04',
+    icon: Bot,
     title: 'AI Agents & Chatbots',
+    headline: 'Smarter interactions. Automated workflows.',
     description:
-      'Intelligent agents that understand your business, communicate naturally, and take action — from customer support and lead qualification to internal workflows.',
-    list: ['AI agents & assistants', 'Voice AI & conversational systems'],
+      'We build intelligent AI agents that engage customers, qualify leads, answer questions, and handle repetitive tasks — giving your team more time to focus on what matters.',
+    list: [
+      'AI Agents & Assistants',
+      'Customer Support Chatbots',
+      'Lead Qualification & Routing',
+      'Voice AI & Conversational Systems',
+    ],
   },
 ];
 
-const projects = [
+type Project = {
+  title: string;
+  meta: string;
+  status?: string;
+  role?: string;
+  stack?: string;
+  description: string;
+  image: string;
+  href: string;
+};
+
+const projects: Project[] = [
   {
     title: 'Loomsville',
-    meta: 'Web / E-commerce · Live',
+    meta: 'Web / E-commerce',
+    status: 'Live',
+    role: 'Design, development & deployment',
     description:
       'A calm online store for a luxury farm-cotton bedding brand — collections, bundle offers and a clear path to checkout, built and deployed end to end.',
-    image: '/images/project-interface.png',
+    image: '/images/project-interface.jpg',
     href: 'https://hbcqzk-1z.myshopify.com/',
   },
   {
     title: 'NewsFinder',
-    meta: 'AI / Intelligence ',
+    meta: 'AI / Intelligence',
     description:
       'Context-aware news discovery for niche research — helping users find relevant stories, connect events and explore information through natural-language search.',
-    image: '/images/news.png',
+    image: '/images/news.jpg',
     href: '',
   },
   {
     title: 'Email Template Copilot',
-    meta: 'AI Integration / Marketing ',
+    meta: 'AI Integration / Marketing',
+    status: 'In development',
+    role: 'Design & development',
+    stack: 'LangGraph · Prompt engineering · HTML generation',
     description:
-      'A copilot that turns a plain-language prompt into a production-grade HTML email campaign, personalised at scale.',
-    image: '/images/template.png',
+      'A copilot that turns a plain-language prompt into a production-grade HTML email campaign, personalized at scale.',
+    image: '/images/template.jpg',
     href: '',
   },
 ];
@@ -234,7 +284,14 @@ const process = [
 function LivePreview({ image, alt }: { image: string; alt: string }) {
   return (
     <div className="live-preview">
-      <img src={image} alt={alt} />
+      <img
+        src={image}
+        alt={alt}
+        width={900}
+        height={image.includes('project-interface') ? 900 : 600}
+        loading="lazy"
+        decoding="async"
+      />
       <span className="live-badge">
         <span className="live-dot" />
         Live site
@@ -244,6 +301,8 @@ function LivePreview({ image, alt }: { image: string; alt: string }) {
 }
 
 function Home() {
+  // Link straight to the reviews when that section exists; otherwise just to the About page.
+  const aboutHref = visibleTestimonials(import.meta.env.DEV).length > 0 ? '/about#testimonials' : '/about';
   return (
     <>
       <PageMeta page="/" />
@@ -254,13 +313,14 @@ function Home() {
             <h1 className="display">
               Websites, apps
               <br />
-              &amp; automation —<br />
+              &amp; automation,
+              <br />
               with AI where
               <br />
               it counts.
             </h1>
             <p>
-              I’m {site.name}. I design and ship websites and web products, automate the work behind them, and add AI
+              At {site.name}, we design and ship websites and web products, automate the work behind them, and add AI
               features that earn their place — from first sketch to shipped product.
             </p>
             <div className="hero-actions">
@@ -268,13 +328,16 @@ function Home() {
                 Start a project <ArrowUpRight className="button-arrow" size={15} />
               </Link>
               <a href="#work" className="button button-light" data-testid="link-hero-work">
-                Deliverables
+                See selected work
               </a>
             </div>
           </Reveal>
           <Reveal className="hero-media">
             <img
-              src="/images/hero-axn.jpg"
+              {...lcpImage('/')}
+              width={1536}
+              height={1024}
+              fetchPriority="high"
               alt="An AI core connecting web applications, automation, AI agents and API integrations above a laptop on a desk"
               data-testid="img-home-hero"
             />
@@ -300,12 +363,21 @@ function Home() {
             </p>
           </Reveal>
           <div className="service-grid">
-            {services.map(({ number, title, description, list }) => (
-              <Reveal key={number} className="service-card">
+            {services.map(({ number, icon: Icon, title, headline, description, list }) => (
+              <Reveal key={number} className="service-card" data-testid={`service-${number}`}>
+                <Icon aria-hidden="true" />
                 <span className="card-index">{number}</span>
                 <h3>{title}</h3>
+                <p className="service-headline">{headline}</p>
                 <p>{description}</p>
-                <p>{list.join(' · ')}</p>
+                <ul className="service-list">
+                  {list.map((item) => (
+                    <li key={item}>
+                      <Asterisk aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </Reveal>
             ))}
           </div>
@@ -319,7 +391,7 @@ function Home() {
             <h2 className="display">Clear milestones. Steady updates. Work that ships.</h2>
             <p className="proof-intro">
               Every project has one point of contact, defined milestones and regular check-ins, so you always know what
-              ships next. You’re involved from the first brief to launch day — and I stay accountable for it after.
+              ships next. You’re involved from the first brief to launch day — and we stay accountable for it after.
             </p>
           </Reveal>
           {/* PLACEHOLDER stats — replace with your real figures before publishing. */}
@@ -347,8 +419,8 @@ function Home() {
               <span className="eyebrow">Selected work</span>
               <h2 className="display">Work that shipped.</h2>
             </div>
-            <Link href="/about" className="text-link" data-testid="link-work-more">
-              More about me <ArrowUpRight size={14} />
+            <Link href={aboutHref} className="text-link" data-testid="link-work-more">
+              More about us <ArrowUpRight size={14} />
             </Link>
           </Reveal>
           <div className="projects">
@@ -369,13 +441,27 @@ function Home() {
                     <img
                       src={project.image}
                       alt={`${project.title} project preview`}
+                      width={900}
+                      height={project.image.includes('project-interface') ? 900 : 600}
+                      loading="lazy"
+                      decoding="async"
                       data-testid={`img-project-${index + 1}`}
                     />
                   )}
                 </div>
                 <h3>{project.title}</h3>
-                <p>{project.meta}</p>
+                <p>{project.status ? `${project.meta} · ${project.status}` : project.meta}</p>
                 <p>{project.description}</p>
+                {project.role && (
+                  <p className="project-fact">
+                    <span>Role</span> {project.role}
+                  </p>
+                )}
+                {project.stack && (
+                  <p className="project-fact">
+                    <span>Stack</span> {project.stack}
+                  </p>
+                )}
                 {project.href && (
                   <a
                     href={project.href}
@@ -397,7 +483,7 @@ function Home() {
         <div className="container-wide">
           <Reveal className="section-heading">
             <div>
-              <span className="eyebrow">How We Work</span>
+              <span className="eyebrow">How we work</span>
               <h2 className="display">
                 From first sketch
                 <br />
@@ -405,7 +491,7 @@ function Home() {
               </h2>
             </div>
             <p>
-              One person accountable for the whole thing — from the first question to the version running in production.
+              One team accountable for the whole thing — from the first question to the version running in production.
             </p>
           </Reveal>
           <div className="process-grid">
@@ -433,7 +519,7 @@ function CtaBand() {
           <span className="eyebrow">Say hi</span>
           <h2 className="display">Have something to build?</h2>
           <p>
-            Tell me about your project — I take ideas from first sketch to shipped product. I read every enquiry and
+            Tell us about your project — we take ideas from first sketch to shipped product. We read every inquiry and
             reply within a few working days.
           </p>
         </Reveal>
@@ -446,16 +532,13 @@ function CtaBand() {
 }
 
 const skills: [string, string[]][] = [
-  ['Web Development', ['Responsive front-end', 'E-commerce', 'Design systems', 'Vercel deployments', 'Docker', 'Git']],
+  ['Web Development', ['Responsive front-end', 'E-commerce', 'Design systems', 'Vercel deployments', 'Git']],
   ['App Development', ['FastAPI', 'Django REST Framework', 'Redis', 'Full-stack products', 'Admin panels']],
   ['Marketing Automation', ['LangGraph', 'API & system integrations', 'Process orchestration']],
   ['AI Agents & Chatbots', ['LangChain', 'RAG', 'Vector databases', 'Embedding models', 'Prompt engineering']],
   ['Cloud & infra', ['AWS Bedrock', 'OpenSearch', 'Azure Service Bus', 'Firebase', 'Kafka', 'Docker']],
   ['ML & vision', ['Deep learning', 'MLOps', 'OpenCV', 'Transformers']],
-  [
-    'Languages',
-    ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'Python', 'SQL', 'Java', 'C#', 'PHP', 'Dart', 'Swift', 'Kotlin'],
-  ],
+  ['Languages', ['HTML', 'CSS', 'JavaScript', 'Python', 'SQL', 'Java', 'Kotlin', 'WordPress']],
 ];
 
 function About() {
@@ -472,26 +555,25 @@ function About() {
               whole problem.
             </h1>
             <p>
-              Digital technology studio AXN Studios creates applications, websites, artificial intelligence systems, and
-              automation to help companies run smarter. We combine design, development, and artificial intelligence to
-              produce digital goods anchored on actual business need. We cover the whole digital experience from
-              high-performance websites and custom applications to AI agents, intelligent chatbots, automated workflows,
-              and system integrations. First we grasp the problem; then, we design and build the correct answer without
-              including technology just for its sake. Every interface exists for a specific use. Every system performs a
-              function. Every system of automation should add value. From the initial concept through the finished work,
-              AXN Studios transforms difficult challenges into straightforward, scalable, and practical digital
-              experiences.
+              {site.name} builds websites, apps, automations and AI features — and you work with one team, from the
+              first conversation to launch. We start with the problem, then build only what it needs. Recent work
+              includes an online store for a bedding brand and an AI tool that drafts marketing emails from a short
+              prompt.
             </p>
           </Reveal>
           <Reveal className="hero-media">
             <img
-              src="/images/about-axn.jpg"
+              {...lcpImage('/about')}
+              width={1555}
+              height={1012}
               alt="A desk with three monitors and a laptop showing the AXN Studios website, an AI assistant chat and an automation workflow, next to sketchbooks"
               data-testid="img-about-hero"
             />
           </Reveal>
         </div>
       </section>
+      <Testimonials items={visibleTestimonials(import.meta.env.DEV)} />
+
       <section className="section proof">
         <div className="container-wide stand-grid">
           <Reveal>
@@ -536,11 +618,13 @@ function Contact() {
               <br />
               to build?
             </h1>
-            <p>Tell me about your project — I take ideas from first sketch to shipped product.</p>
+            <p>Tell us about your project — we take ideas from first sketch to shipped product.</p>
           </Reveal>
           <Reveal className="hero-media">
             <img
-              src="/images/contact-axn.jpg"
+              {...lcpImage('/contact')}
+              width={1555}
+              height={1012}
               alt="A desk with a notebook sketching an idea into a website, app, AI agent or automation, next to a laptop and phone showing the AXN Studios site and chat"
               data-testid="img-contact-hero"
             />
@@ -553,19 +637,23 @@ function Contact() {
             <span className="eyebrow">Say hello</span>
             <h2 className="display">Skip the form. Send an email.</h2>
             <p>
-              Web development · App development · Automation · AI integration. I read every enquiry and reply within a
-              few working days.
+              Tell us what you want to build, your rough budget and your deadline — that helps us reply with something
+              useful. We read every inquiry and reply within a few working days.
             </p>
-            <a href={`mailto:${site.email}`} className="button button-dark form-submit" data-testid="link-contact-cta">
+            <a
+              href={mailto('Project inquiry', 'What I want to build:\n\nBudget:\n\nDeadline:\n')}
+              className="button button-dark form-submit"
+              data-testid="link-contact-cta"
+            >
               Email {site.name} <ArrowUpRight size={15} />
             </a>
           </Reveal>
           <Reveal className="contact-details">
-            <span className="eyebrow">Elsewhere</span>
+            <span className="eyebrow">Details</span>
             <h2 className="display">
-              Find me
+              Reach us
               <br />
-              online.
+              directly.
             </h2>
             <div className="detail-list">
               <div className="detail-item">
@@ -592,9 +680,22 @@ function Contact() {
   );
 }
 
+/** After each navigation, jump to the #hash target if there is one, otherwise to the top of the page. */
+function ScrollManager() {
+  const [location] = useLocation();
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    const target = id ? document.getElementById(id) : null;
+    if (target) target.scrollIntoView({ block: 'start', behavior: 'instant' });
+    else window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [location]);
+  return null;
+}
+
 function Router() {
   return (
     <ErrorBoundary resetKey={useLocation()[0]}>
+      <ScrollManager />
       <Shell>
         <Switch>
           <Route path="/" component={Home} />

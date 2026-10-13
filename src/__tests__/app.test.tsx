@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import App from '@/App';
@@ -93,5 +95,31 @@ describe('ErrorBoundary', () => {
     );
     expect(screen.getByRole('heading', { name: /something went wrong/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /try again/i })).toBeInTheDocument();
+  });
+});
+
+describe('image performance hints', () => {
+  it.each(['/', '/about', '/contact'] as const)('gives the main image on %s responsive sources and a size', (path) => {
+    const { container } = renderAt(path);
+    const hero = container.querySelector(`[data-testid^="img-"][data-testid$="hero"]`) as HTMLImageElement;
+    expect(hero.getAttribute('srcset')).toMatch(/ 800w, .* 1200w, .* \d+w$/);
+    expect(hero).toHaveAttribute('sizes');
+    expect(hero).toHaveAttribute('width');
+    expect(hero).toHaveAttribute('height');
+  });
+
+  it('points every responsive source at a file that exists', () => {
+    for (const page of Object.values(seo.pages)) {
+      const files = [page.lcpImage.src, ...page.lcpImage.srcSet.split(',').map((s) => s.trim().split(' ')[0])];
+      for (const file of files) expect(existsSync(resolve(process.cwd(), 'public', file.slice(1))), file).toBe(true);
+    }
+  });
+
+  it('gives the logos intrinsic dimensions so the header does not shift while loading', () => {
+    const { container } = renderAt('/');
+    for (const logo of container.querySelectorAll('.brand img, .footer-brand img')) {
+      expect(logo).toHaveAttribute('width');
+      expect(logo).toHaveAttribute('height');
+    }
   });
 });

@@ -48,6 +48,17 @@ describe('index.html', () => {
     }
   });
 
+  it('preloads self-hosted fonts that exist and loads nothing from Google', () => {
+    expect(indexHtml).not.toMatch(/googleapis|gstatic/);
+    const fonts = [...indexHtml.matchAll(/<link\s+rel="preload"\s+href="([^"]+\.woff2)"/g)].map((m) => m[1]);
+    expect(fonts.length).toBeGreaterThanOrEqual(2);
+    for (const font of fonts) expect(existsSync(resolve(root, 'public', font.slice(1))), font).toBe(true);
+    const css = read('src/index.css');
+    for (const [, url] of css.matchAll(/url\('(\/fonts\/[^']+)'\)/g)) {
+      expect(existsSync(resolve(root, 'public', url.slice(1))), url).toBe(true);
+    }
+  });
+
   it('references only icons that exist in public/', () => {
     for (const [, href] of indexHtml.matchAll(/<link\s+rel="(?:icon|apple-touch-icon)"[^>]*?href="([^"]+)"/g)) {
       expect(existsSync(resolve(root, 'public', href.slice(1))), href).toBe(true);
@@ -73,6 +84,23 @@ describe('vercel.json', () => {
     expect(headers['X-Frame-Options']).toBe('DENY');
     expect(headers['Referrer-Policy']).toBeTruthy();
     expect(headers['Permissions-Policy']).toBeTruthy();
+  });
+
+  it('allows no third-party origins (fonts are self-hosted)', () => {
+    expect(directive('style-src')).toBe("style-src 'self'");
+    expect(directive('font-src')).toBe("font-src 'self'");
+    expect(csp).not.toMatch(/https?:\/\//);
+  });
+
+  it('caches hashed assets and fonts forever and other static files for a day', () => {
+    const cache = (source: string) =>
+      vercel.headers
+        .find((rule: { source: string }) => rule.source === source)
+        ?.headers.find((h: { key: string }) => h.key === 'Cache-Control')?.value as string;
+    expect(cache('/assets/(.*)')).toContain('immutable');
+    expect(cache('/fonts/(.*)')).toContain('immutable');
+    expect(cache('/images/(.*)')).toMatch(/max-age=86400/);
+    expect(cache('/images/(.*)')).not.toContain('immutable');
   });
 
   it('uses a restrictive CSP', () => {
@@ -110,7 +138,14 @@ describe('scripts/prerender.mjs', () => {
     expect(about).toContain(`<link rel="canonical" href="${seo.url}/about" />`);
     expect(out.file('contact.html')).toContain(`href="${seo.url}/contact"`);
 
+    for (const [path, page] of Object.entries(seo.pages)) {
+      const html = out.file(path === '/' ? 'index.html' : `${path.slice(1)}.html`);
+      expect(html).toContain(`<link rel="preload" as="image" href="${page.lcpImage.src}"`);
+      expect(html).toContain(`imagesrcset="${page.lcpImage.srcSet}"`);
+    }
+
     const notFound = out.file('404.html');
+    expect(notFound).not.toContain('as="image"');
     expect(notFound).toContain('<meta name="robots" content="noindex" />');
     expect(notFound).not.toContain('rel="canonical"');
 

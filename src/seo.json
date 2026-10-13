@@ -5,16 +5,31 @@
   "imageAlt": "AXN Studios — websites, apps, automation and AI",
   "pages": {
     "/": {
-      "title": "Home - AxnStudios",
-      "description": "Japji Soni designs and ships websites, web and app products, automates the work behind them, and adds AI features that earn their place."
+      "title": "AXN Studios — Web, App, Automation & AI Development",
+      "description": "AXN Studios builds websites, web and app products and automation, and adds AI features that earn their place — one accountable team, first sketch to launch.",
+      "lcpImage": {
+        "src": "/images/hero-axn.jpg",
+        "srcSet": "/images/hero-axn-800.jpg 800w, /images/hero-axn-1200.jpg 1200w, /images/hero-axn.jpg 1536w",
+        "sizes": "(max-width: 900px) 92vw, 560px"
+      }
     },
     "/about": {
-      "title": "About — axnstudios",
-      "description": "A web development and automation practice that takes ideas from first sketch to shipped product and stays accountable for the whole thing."
+      "title": "About — AXN Studios",
+      "description": "Meet AXN Studios: one accountable team for your website, app, automation or AI project, from the first conversation to launch.",
+      "lcpImage": {
+        "src": "/images/about-axn.jpg",
+        "srcSet": "/images/about-axn-800.jpg 800w, /images/about-axn-1200.jpg 1200w, /images/about-axn.jpg 1555w",
+        "sizes": "(max-width: 900px) 92vw, 560px"
+      }
     },
     "/contact": {
-      "title": "Contact — axnstudios",
-      "description": "Have something to build? Tell Japji Soni about your website, app, automation or AI project."
+      "title": "Contact — AXN Studios",
+      "description": "Have something to build? Tell AXN Studios about your website, app, automation or AI project and get a reply within a few working days.",
+      "lcpImage": {
+        "src": "/images/contact-axn.jpg",
+        "srcSet": "/images/contact-axn-800.jpg 800w, /images/contact-axn-1200.jpg 1200w, /images/contact-axn.jpg 1555w",
+        "sizes": "(max-width: 900px) 92vw, 560px"
+      }
     }
   },
   "notFound": {
